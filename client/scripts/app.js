@@ -97,4 +97,13 @@ var roomClickHandler = function(e) {
   updateMessages();
 };
 
+$('#newRoom').on('click', function() {
+  var roomname = prompt("Name your new room!");
+  if (roomname !== "") {
+    currentRoomname = roomname;
+    window.location.search = "?username=" + username + "&roomname=" + currentRoomname;
+  }
+})
+
+
 
