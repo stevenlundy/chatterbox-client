@@ -4,6 +4,10 @@ var parseUrl = 'https://api.parse.com/1/classes/chatterbox';
 var messages = {};
 var rooms = {};
 
+if (!localStorage.hasOwnProperty(username)) {
+  localStorage[username] = "";
+}
+
 var updateRooms = function(message) {
   if (!rooms.hasOwnProperty(message.roomname)) {
     rooms[message.roomname] = {};
@@ -32,7 +36,16 @@ var updateMessages = function(){
             var messageBox = $('<div class="messageBox card-panel teal lighten-2 hoverable" />');
             var innerContent = $('<div class="card-content" />');
             var footer = $('<div class="card-footer" />').text(Date(message.createdAt));
-            innerContent.append($('<span class="username card-title" />').text(message.username));
+            var usernameSpan = $('<span class="username card-title" />');
+            usernameSpan.text(message.username);
+            if (localStorage[username].split(',').indexOf(message.username) > -1) {
+              usernameSpan.addClass("friend");
+            }
+            usernameSpan.on('click', function() {
+              $(this).addClass('friend');
+              localStorage[username] += "," + message.username;
+            });
+            innerContent.append(usernameSpan);
             innerContent.append($('<p class="message" />').text(message.text));
             messageBox.append(innerContent);
             messageBox.append(footer);

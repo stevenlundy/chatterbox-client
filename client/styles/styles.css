@@ -5,6 +5,9 @@ body {
     font-family: arial, sans-serif;
 }
 
+.friend {
+    font-weight: 600;
+}
 .rooms {
     display: flex;
     flex-direction: column;
