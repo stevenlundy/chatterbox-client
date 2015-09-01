@@ -7,6 +7,9 @@ var rooms = {};
 var updateRooms = function(message) {
   if (!rooms.hasOwnProperty(message.roomname)) {
     rooms[message.roomname] = {};
+    var link = '?username=' + username + '&roomname=' + message.roomname;
+    var room = $('<li class="room" />').append($('<a class="room-link" />').text(message.roomname).attr('href', '#').attr('data-room-name', message.roomname).on('click', roomClickHandler));
+    $('.rooms').append(room);
   }
 
   rooms[message.roomname][message.id] = message;
@@ -24,8 +27,8 @@ var updateMessages = function(){
       _.each(data.results, function(message){
         if(!messages.hasOwnProperty(message.objectId)){
           messages[message.objectId] = message;
-          if(message.text){
-            updateRooms(message);
+          updateRooms(message);
+          if(message.text && message.roomname === currentRoomname){
             var messageBox = $('<div class="messageBox card-panel teal lighten-2 hoverable" />');
             var innerContent = $('<div class="card-content" />');
             var footer = $('<div class="card-footer" />').text(Date(message.createdAt));
@@ -49,14 +52,14 @@ var postToMessages = function(){
   var message = {
     text: $('#message').val(),
     username: username,
-    room: 'The Bonfire'
+    roomname: currentRoomname
   }
   $.ajax({
     url: parseUrl,
     type: 'POST',
     data: JSON.stringify(message),
     contentType: 'application/json',
-    success: function(){
+    success: function(data){
       console.log('success');
       updateMessages();
     },
@@ -69,7 +72,8 @@ var postToMessages = function(){
   $('#message').val('');
 }
 
-  $('#submit-new-message').on('click', function(){
+  $('#submit-new-message').on('click', function(e){
+    e.preventDefault();
     console.log('clicked');
     postToMessages();
   });
@@ -85,10 +89,12 @@ var encodeHTMLEntities = function(string) {
   return string.replace(/\<\W*script[^>]*\>/gi, '');
 };
 
-  // Initialize collapse button
-$('.button-collapse').sideNav({
-      menuWidth: 300, // Default is 240
-      edge: 'right', // Choose the horizontal origin
-      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    }
-  );
+var roomClickHandler = function(e) {
+  e.preventDefault();
+  console.log("Hi!");
+  currentRoomname = $(this).attr('data-room-name');
+  window.location.search = "?username=" + username + "&roomname=" + currentRoomname;
+  updateMessages();
+};
+
+
