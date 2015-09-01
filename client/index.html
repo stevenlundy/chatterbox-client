@@ -3,21 +3,49 @@
   <head>
     <meta charset="utf-8">
     <title>chatterbox</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.css">
 
+  </head>
+  <body>
+    <nav class="sideNav red lighten-2">
+    <h2 class="small">Rooms</h2>
+      <ul class="rooms">
+        
+      </ul>
+    </nav>
+
+    <div id="main">
+      <h1>chatterbox</h1>
+      
+     
+      <div class="forms">
+        <!-- <div class="input-field">
+          <input id="username" type="text" class="validate">
+          <label for="username">Username</label>
+        </div> -->
+        <div class="input-field">
+          <textarea id="message" class="materialize-textarea"></textarea>
+          <label for="message">Post Message</label>
+        </div>
+        <button class="btn waves-effect waves-light" id="submit-new-message">Submit
+           <!-- <i class="material-icons">send</i> -->
+        </button>
+      </div>
+
+    </div>
+    <div id="chats"></div>
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/materialize/dist/js/materialize.js"></script>
+
+
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
-  </head>
-  <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-    </div>
-    <div id="chats"></div>
+
+
   </body>
 </html>
